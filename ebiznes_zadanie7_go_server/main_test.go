@@ -9,6 +9,7 @@ import (
 )
 
 const statusErrorMessage = "handler returned wrong status code: got %v want %v"
+const bodyErrorMessage = "handler returned unexpected body: got %v want %v"
 
 func TestGetProductsOne(t *testing.T) {
 	req, err := http.NewRequest("GET", "/api/products", nil)
@@ -27,7 +28,7 @@ func TestGetProductsOne(t *testing.T) {
 
 	expected := `[{"id":"1","name":"Product 1","price":10},{"id":"2","name":"Product 2","price":20},{"id":"3","name":"Product 3","price":30}]`
 	if strings.TrimSpace(rr.Body.String()) != expected {
-		t.Errorf("handler returned unexpected body: got %v want %v",
+		t.Errorf(bodyErrorMessage,
 			strings.TrimSpace(rr.Body.String()), expected)
 	}
 }
@@ -50,7 +51,7 @@ func TestHandlePaymentsPostTwo(t *testing.T) {
 
 	expected := `{"id":"1","amount":100,"cardNumber":"1234567812345678","cardExpiry":"01/23","cardCvv":"123"}`
 	if strings.TrimSpace(rr.Body.String()) != expected {
-		t.Errorf("handler returned unexpected body: got %v want %v",
+		t.Errorf(bodyErrorMessage,
 			strings.TrimSpace(rr.Body.String()), expected)
 	}
 }
@@ -186,7 +187,7 @@ func TestHandlePaymentsEmptyIDTen(t *testing.T) {
 
 	expected := `{"id":"","amount":100,"cardNumber":"1234567812345678","cardExpiry":"01/23","cardCvv":"123"}` + "\n"
 	if rr.Body.String() != expected {
-		t.Errorf("handler returned unexpected body: got %v want %v",
+		t.Errorf(bodyErrorMessage,
 			rr.Body.String(), expected)
 	}
 }
