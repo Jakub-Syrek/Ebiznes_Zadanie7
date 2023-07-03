@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestGetProducts_1(t *testing.T) {
+func TestGetProductsOne(t *testing.T) {
 	req, err := http.NewRequest("GET", "/api/products", nil)
 	if err != nil {
 		t.Fatal(err)
@@ -31,7 +31,7 @@ func TestGetProducts_1(t *testing.T) {
 	}
 }
 
-func TestHandlePayments_POST_2(t *testing.T) {
+func TestHandlePayments_PostTwo(t *testing.T) {
 	payment := `{"id":"1","amount":100.00,"cardNumber":"1234567812345678","cardExpiry":"01/23","cardCvv":"123"}`
 	req, err := http.NewRequest("POST", "/api/payments", bytes.NewBufferString(payment))
 	if err != nil {
@@ -55,7 +55,7 @@ func TestHandlePayments_POST_2(t *testing.T) {
 	}
 }
 
-func TestHandlePayments_GET_3(t *testing.T) {
+func TestHandlePayments_GetThree(t *testing.T) {
 	req, err := http.NewRequest("GET", "/api/payments", nil)
 	if err != nil {
 		t.Fatal(err)
@@ -72,7 +72,7 @@ func TestHandlePayments_GET_3(t *testing.T) {
 	}
 }
 
-func TestHandlePayments_EmptyBody_4(t *testing.T) {
+func TestHandlePayments_EmptyBodyFour(t *testing.T) {
 	req, err := http.NewRequest("POST", "/api/payments", bytes.NewBufferString(""))
 	if err != nil {
 		t.Fatal(err)
@@ -89,7 +89,7 @@ func TestHandlePayments_EmptyBody_4(t *testing.T) {
 	}
 }
 
-func TestHandlePayments_InvalidJSON_5(t *testing.T) {
+func TestHandlePayments_InvalidJSONFive(t *testing.T) {
 	payment := `{"id":"1","amount":"invalid","cardNumber":"1234567812345678","cardExpiry":"01/23","cardCvv":"123"}`
 	req, err := http.NewRequest("POST", "/api/payments", bytes.NewBufferString(payment))
 	if err != nil {
@@ -107,7 +107,7 @@ func TestHandlePayments_InvalidJSON_5(t *testing.T) {
 	}
 }
 
-func TestHandlePayments_InvalidBody_6(t *testing.T) {
+func TestHandlePayments_InvalidBodySix(t *testing.T) {
 	req, err := http.NewRequest("POST", "/api/payments", bytes.NewBufferString("invalid"))
 	if err != nil {
 		t.Fatal(err)
@@ -124,7 +124,7 @@ func TestHandlePayments_InvalidBody_6(t *testing.T) {
 	}
 }
 
-func TestHandlePayments_GET_NotAllowed_7(t *testing.T) {
+func TestHandlePayments_GET_NotAllowedSeven(t *testing.T) {
 	req, err := http.NewRequest("GET", "/api/payments", nil)
 	if err != nil {
 		t.Fatal(err)
@@ -141,7 +141,7 @@ func TestHandlePayments_GET_NotAllowed_7(t *testing.T) {
 	}
 }
 
-func TestGetProducts_POST_NotAllowed_8(t *testing.T) {
+func TestGetProducts_POST_NotAllowedEight(t *testing.T) {
 	req, err := http.NewRequest("POST", "/api/products", nil)
 	if err != nil {
 		t.Fatal(err)
@@ -158,7 +158,7 @@ func TestGetProducts_POST_NotAllowed_8(t *testing.T) {
 	}
 }
 
-func TestInvalidPath_9(t *testing.T) {
+func TestInvalidPathNine(t *testing.T) {
 	req, err := http.NewRequest("GET", "/invalid", nil)
 	if err != nil {
 		t.Fatal(err)
@@ -177,7 +177,7 @@ func TestInvalidPath_9(t *testing.T) {
 	}
 }
 
-func TestHandlePayments_EmptyID_10(t *testing.T) {
+func TestHandlePayments_EmptyIDTen(t *testing.T) {
 	req, err := http.NewRequest("POST", "/api/payments", strings.NewReader(`{"id":"","amount":100,"cardNumber":"1234567812345678","cardExpiry":"01/23","cardCvv":"123"}`))
 	if err != nil {
 		t.Fatal(err)
