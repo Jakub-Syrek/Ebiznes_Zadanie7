@@ -8,6 +8,8 @@ import (
 	"testing"
 )
 
+const statusErrorMessage = "handler returned wrong status code: got %v want %v"
+
 func TestGetProductsOne(t *testing.T) {
 	req, err := http.NewRequest("GET", "/api/products", nil)
 	if err != nil {
@@ -20,8 +22,7 @@ func TestGetProductsOne(t *testing.T) {
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
+		t.Errorf(statusErrorMessage, status, http.StatusOK)
 	}
 
 	expected := `[{"id":"1","name":"Product 1","price":10},{"id":"2","name":"Product 2","price":20},{"id":"3","name":"Product 3","price":30}]`
@@ -44,8 +45,7 @@ func TestHandlePayments_PostTwo(t *testing.T) {
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
+		t.Errorf(statusErrorMessage, status, http.StatusOK)
 	}
 
 	expected := `{"id":"1","amount":100,"cardNumber":"1234567812345678","cardExpiry":"01/23","cardCvv":"123"}`
@@ -66,9 +66,10 @@ func TestHandlePayments_GetThree(t *testing.T) {
 
 	handler.ServeHTTP(rr, req)
 
+	
+
 	if status := rr.Code; status != http.StatusMethodNotAllowed {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusMethodNotAllowed)
+		t.Errorf(statusErrorMessage, status, http.StatusMethodNotAllowed)
 	}
 }
 
@@ -83,9 +84,10 @@ func TestHandlePayments_EmptyBodyFour(t *testing.T) {
 
 	handler.ServeHTTP(rr, req)
 
+	
+
 	if status := rr.Code; status != http.StatusBadRequest {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusBadRequest)
+		t.Errorf(statusErrorMessage, status, http.StatusBadRequest)
 	}
 }
 
@@ -102,8 +104,7 @@ func TestHandlePayments_InvalidJSONFive(t *testing.T) {
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusBadRequest {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusBadRequest)
+		t.Errorf(statusErrorMessage, status, http.StatusBadRequest)
 	}
 }
 
@@ -119,8 +120,7 @@ func TestHandlePayments_InvalidBodySix(t *testing.T) {
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusBadRequest {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusBadRequest)
+		t.Errorf(statusErrorMessage, status, http.StatusBadRequest)
 	}
 }
 
@@ -136,8 +136,7 @@ func TestHandlePayments_GET_NotAllowedSeven(t *testing.T) {
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusMethodNotAllowed {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusMethodNotAllowed)
+		t.Errorf(statusErrorMessage, status, http.StatusMethodNotAllowed)
 	}
 }
 
@@ -153,8 +152,7 @@ func TestGetProducts_POST_NotAllowedEight(t *testing.T) {
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusMethodNotAllowed {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusMethodNotAllowed)
+		t.Errorf(statusErrorMessage, status, http.StatusMethodNotAllowed)
 	}
 }
 
@@ -172,8 +170,7 @@ func TestInvalidPathNine(t *testing.T) {
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusNotFound {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusNotFound)
+		t.Errorf(statusErrorMessage, status, http.StatusNotFound)
 	}
 }
 
@@ -188,8 +185,7 @@ func TestHandlePayments_EmptyIDTen(t *testing.T) {
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
+		t.Errorf(statusErrorMessage, status, http.StatusOK)
 	}
 
 	expected := `{"id":"","amount":100,"cardNumber":"1234567812345678","cardExpiry":"01/23","cardCvv":"123"}` + "\n"
