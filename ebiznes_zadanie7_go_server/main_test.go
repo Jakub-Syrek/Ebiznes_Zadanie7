@@ -32,7 +32,7 @@ func TestGetProductsOne(t *testing.T) {
 	}
 }
 
-func TestHandlePayments_PostTwo(t *testing.T) {
+func TestHandlePaymentsPostTwo(t *testing.T) {
 	payment := `{"id":"1","amount":100.00,"cardNumber":"1234567812345678","cardExpiry":"01/23","cardCvv":"123"}`
 	req, err := http.NewRequest("POST", "/api/payments", bytes.NewBufferString(payment))
 	if err != nil {
@@ -55,7 +55,7 @@ func TestHandlePayments_PostTwo(t *testing.T) {
 	}
 }
 
-func TestHandlePayments_GetThree(t *testing.T) {
+func TestHandlePaymentsGetThree(t *testing.T) {
 	req, err := http.NewRequest("GET", "/api/payments", nil)
 	if err != nil {
 		t.Fatal(err)
@@ -66,14 +66,12 @@ func TestHandlePayments_GetThree(t *testing.T) {
 
 	handler.ServeHTTP(rr, req)
 
-	
-
 	if status := rr.Code; status != http.StatusMethodNotAllowed {
 		t.Errorf(statusErrorMessage, status, http.StatusMethodNotAllowed)
 	}
 }
 
-func TestHandlePayments_EmptyBodyFour(t *testing.T) {
+func TestHandlePaymentsEmptyBodyFour(t *testing.T) {
 	req, err := http.NewRequest("POST", "/api/payments", bytes.NewBufferString(""))
 	if err != nil {
 		t.Fatal(err)
@@ -84,14 +82,12 @@ func TestHandlePayments_EmptyBodyFour(t *testing.T) {
 
 	handler.ServeHTTP(rr, req)
 
-	
-
 	if status := rr.Code; status != http.StatusBadRequest {
 		t.Errorf(statusErrorMessage, status, http.StatusBadRequest)
 	}
 }
 
-func TestHandlePayments_InvalidJSONFive(t *testing.T) {
+func TestHandlePaymentsInvalidJSONFive(t *testing.T) {
 	payment := `{"id":"1","amount":"invalid","cardNumber":"1234567812345678","cardExpiry":"01/23","cardCvv":"123"}`
 	req, err := http.NewRequest("POST", "/api/payments", bytes.NewBufferString(payment))
 	if err != nil {
@@ -108,7 +104,7 @@ func TestHandlePayments_InvalidJSONFive(t *testing.T) {
 	}
 }
 
-func TestHandlePayments_InvalidBodySix(t *testing.T) {
+func TestHandlePaymentsInvalidBodySix(t *testing.T) {
 	req, err := http.NewRequest("POST", "/api/payments", bytes.NewBufferString("invalid"))
 	if err != nil {
 		t.Fatal(err)
@@ -124,7 +120,7 @@ func TestHandlePayments_InvalidBodySix(t *testing.T) {
 	}
 }
 
-func TestHandlePayments_GET_NotAllowedSeven(t *testing.T) {
+func TestHandlePaymentsGETNotAllowedSeven(t *testing.T) {
 	req, err := http.NewRequest("GET", "/api/payments", nil)
 	if err != nil {
 		t.Fatal(err)
@@ -140,7 +136,7 @@ func TestHandlePayments_GET_NotAllowedSeven(t *testing.T) {
 	}
 }
 
-func TestGetProducts_POST_NotAllowedEight(t *testing.T) {
+func TestGetProductsPOSTNotAllowedEight(t *testing.T) {
 	req, err := http.NewRequest("POST", "/api/products", nil)
 	if err != nil {
 		t.Fatal(err)
@@ -174,7 +170,7 @@ func TestInvalidPathNine(t *testing.T) {
 	}
 }
 
-func TestHandlePayments_EmptyIDTen(t *testing.T) {
+func TestHandlePaymentsEmptyIDTen(t *testing.T) {
 	req, err := http.NewRequest("POST", "/api/payments", strings.NewReader(`{"id":"","amount":100,"cardNumber":"1234567812345678","cardExpiry":"01/23","cardCvv":"123"}`))
 	if err != nil {
 		t.Fatal(err)
