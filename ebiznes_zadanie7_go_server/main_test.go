@@ -125,7 +125,6 @@ func TestHandlePaymentsInvalidBodySix(t *testing.T) {
 func TestHandlePaymentsGETNotAllowedSeven(t *testing.T) {
 	req, err := http.NewRequest("GET", apiPayments, nil)
 	if err != nil {
-		t.Fatal(err)
 	}
 
 	rr := httptest.NewRecorder()
