@@ -52,7 +52,7 @@ function App() {
         </nav>
 
         <Routes>
-          <Route path="/" element={<Home />} /> // Dodajemy ścieżkę dla strony głównej
+          <Route path="/" element={<Home />} />
           <Route path="/produkty" element={<Produkty addToCart={addToCart} />} />
           <Route path="/koszyk" element={<Koszyk cart={cart} removeFromCart={removeFromCart} />} />
           <Route path="/platnosci" element={<Platnosci />} />
