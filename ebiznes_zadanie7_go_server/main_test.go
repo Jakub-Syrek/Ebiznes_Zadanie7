@@ -10,6 +10,7 @@ import (
 
 const statusErrorMessage = "handler returned wrong status code: got %v want %v"
 const bodyErrorMessage = "handler returned unexpected body: got %v want %v"
+const apiPayments = "/api/payments"
 
 func TestGetProductsOne(t *testing.T) {
 	req, err := http.NewRequest("GET", "/api/products", nil)
@@ -35,7 +36,7 @@ func TestGetProductsOne(t *testing.T) {
 
 func TestHandlePaymentsPostTwo(t *testing.T) {
 	payment := `{"id":"1","amount":100.00,"cardNumber":"1234567812345678","cardExpiry":"01/23","cardCvv":"123"}`
-	req, err := http.NewRequest("POST", "/api/payments", bytes.NewBufferString(payment))
+	req, err := http.NewRequest("POST", apiPayments, bytes.NewBufferString(payment))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -57,7 +58,7 @@ func TestHandlePaymentsPostTwo(t *testing.T) {
 }
 
 func TestHandlePaymentsGetThree(t *testing.T) {
-	req, err := http.NewRequest("GET", "/api/payments", nil)
+	req, err := http.NewRequest("GET", apiPayments, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -73,7 +74,7 @@ func TestHandlePaymentsGetThree(t *testing.T) {
 }
 
 func TestHandlePaymentsEmptyBodyFour(t *testing.T) {
-	req, err := http.NewRequest("POST", "/api/payments", bytes.NewBufferString(""))
+	req, err := http.NewRequest("POST", apiPayments, bytes.NewBufferString(""))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -90,7 +91,7 @@ func TestHandlePaymentsEmptyBodyFour(t *testing.T) {
 
 func TestHandlePaymentsInvalidJSONFive(t *testing.T) {
 	payment := `{"id":"1","amount":"invalid","cardNumber":"1234567812345678","cardExpiry":"01/23","cardCvv":"123"}`
-	req, err := http.NewRequest("POST", "/api/payments", bytes.NewBufferString(payment))
+	req, err := http.NewRequest("POST", apiPayments, bytes.NewBufferString(payment))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -106,7 +107,7 @@ func TestHandlePaymentsInvalidJSONFive(t *testing.T) {
 }
 
 func TestHandlePaymentsInvalidBodySix(t *testing.T) {
-	req, err := http.NewRequest("POST", "/api/payments", bytes.NewBufferString("invalid"))
+	req, err := http.NewRequest("POST", apiPayments, bytes.NewBufferString("invalid"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -122,7 +123,7 @@ func TestHandlePaymentsInvalidBodySix(t *testing.T) {
 }
 
 func TestHandlePaymentsGETNotAllowedSeven(t *testing.T) {
-	req, err := http.NewRequest("GET", "/api/payments", nil)
+	req, err := http.NewRequest("GET", apiPayments, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -172,7 +173,7 @@ func TestInvalidPathNine(t *testing.T) {
 }
 
 func TestHandlePaymentsEmptyIDTen(t *testing.T) {
-	req, err := http.NewRequest("POST", "/api/payments", strings.NewReader(`{"id":"","amount":100,"cardNumber":"1234567812345678","cardExpiry":"01/23","cardCvv":"123"}`))
+	req, err := http.NewRequest("POST", apiPayments, strings.NewReader(`{"id":"","amount":100,"cardNumber":"1234567812345678","cardExpiry":"01/23","cardCvv":"123"}`))
 	if err != nil {
 		t.Fatal(err)
 	}
